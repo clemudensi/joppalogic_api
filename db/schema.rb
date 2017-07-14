@@ -10,10 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711235849) do
+ActiveRecord::Schema.define(version: 20170713035144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "phone_number"
+    t.string   "alternate_phone_number"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "company_name"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.boolean  "validated"
+    t.integer  "parcel_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "couriers", force: :cascade do |t|
+    t.string   "slug"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "web_url"
+    t.string   "description"
+    t.string   "courier_id"
+    t.boolean  "active"
+    t.string   "account_id"
+    t.text     "capabilities", default: [],              array: true
+    t.json     "parameters"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "items", force: :cascade do |t|
     t.string   "description"
@@ -51,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170711235849) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
+    t.string   "email"
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -65,6 +97,13 @@ ActiveRecord::Schema.define(version: 20170711235849) do
     t.string   "lastname"
     t.string   "phone_number"
     t.string   "alternate_phone_number"
+    t.string   "fax"
+    t.string   "company_name"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.boolean  "validated"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree

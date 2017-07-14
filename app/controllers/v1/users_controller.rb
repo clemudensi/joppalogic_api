@@ -1,5 +1,7 @@
 module V1
 class UsersController < ApplicationController
+	skip_before_filter :verify_jwt_token
+	
 	before_action :set_user, only: [:update]
 	def index
 		@users = User.all
@@ -26,7 +28,8 @@ class UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:email, 
+		params.require(:user).permit(
+									:email, 
 									:password, 
 									:password_confirmation,
 									:firstname,

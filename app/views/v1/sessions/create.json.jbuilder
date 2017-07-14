@@ -5,5 +5,6 @@ json.data do
 		:email,
 		:authentication_token
 		)
+		json.auth_token @auth_token
 	end
 end
