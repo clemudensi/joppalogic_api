@@ -1,8 +1,9 @@
 module V1
 class UsersController < ApplicationController
-	skip_before_filter :verify_jwt_token
-	
+	skip_before_action :verify_jwt_token, except: [:update]
 	before_action :set_user, only: [:update]
+
+
 	def index
 		@users = User.all
 	end

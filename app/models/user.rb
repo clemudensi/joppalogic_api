@@ -7,4 +7,8 @@ class User < ApplicationRecord
 
     has_many :parcels
 	has_many :roles
+
+	# # validates :username,  :presence => true, :uniqueness => true
+ #  validates :email,     :presence => true, :uniqueness => true, :format => /@/
+ #  validates_length_of   :password, :in => 4..20, :on => :create
 end

@@ -22,3 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+# This is the api server of Joppalogic
+The ruby version used is ruby 2.3.1

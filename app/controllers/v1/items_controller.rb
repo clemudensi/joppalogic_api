@@ -3,6 +3,4 @@ class ItemsController < ApplicationController
 		@parcels = Parcel.all
 		render :index
 	end
-
-	# private
 end

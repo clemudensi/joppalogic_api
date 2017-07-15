@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::API
 
-	# before_action :authenticate_user!
-	before_filter :verify_jwt_token
+	before_action :verify_jwt_token
 
-	# private
+	# protected
 
 	def verify_jwt_token
 		head :unauthorized if request.headers['Authorization'].nil? || !AuthToken.valid?(request.headers['Authorization'].split(' ').last)

@@ -1,22 +1,22 @@
 class V1::SessionsController < Devise::SessionsController
 # class V1::SessionsController < ApplicationController
 	# skip_before_filter :authenticate_user_from_token!
-	skip_before_filter :verify_jwt_token
+	skip_before_action :verify_jwt_token
 	
-	def create
-		@user = User.where(email: params[:email]).first
+	require 'auth_token'
 
-		if @user&.valid_password?(params[:password]) #user && user.valid
-			@auth_token = JWTWrapper(@user)
+	def create
+
+		user = User.where(email: params[:email]).first
+
+		 if user&.valid_password?(params[:password]) #user && user.valid
+			@auth_token = AuthToken.issue_token({user_id: user.id})
 			render :create, status: :created
 		else
 			head(:unauthorized)
 		end
-
 	end
 
 	def destroy
 	end
-
-
 end
