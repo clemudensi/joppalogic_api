@@ -1,5 +1,5 @@
 json.data do
 	json.user do
-		json.auth_token @auth_token
+		json.joppalogic_api_token @auth_token
 	end
 end

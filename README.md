@@ -24,3 +24,28 @@ Things you may want to cover:
 * ...
 # This is the api server of Joppalogic
 The ruby version used is ruby 2.3.1
+
+The root endpoint of this application is 
+
+joppalogicapi.herokuapp.com/v1
+
+Available endpoints formats are as specified in the stoplight of this project but the currently accessible endpoints are as follows:
+
+* /users 
+	* index
+	* create
+	* update
+
+* /parcels
+	*index
+	*create
+
+* /sessions
+	* index
+
+* /couriers
+	* index
+	* create
+
+* /items
+	* index
