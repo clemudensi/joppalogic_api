@@ -40,7 +40,7 @@ Available endpoints formats are as specified in the stoplight of this project bu
 	*index
 	*create
 
-* /sessions
+* /sessions this is the login endpoint where a token is generated and used in every call.
 	* index
 
 * /couriers
