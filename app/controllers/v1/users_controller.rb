@@ -12,6 +12,22 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 
 		if @user.save
+
+			 # Create user on Authy, will return an id on the object
+			  authy = Authy::API.register_user(
+			    email: @user.email,
+			    cellphone: @user.phone_number,
+			    country_code: @user.country_code
+			  )
+			  puts @user.email
+			  puts @user.phone_number
+			  puts @user.country_code
+			  puts authy.id
+			  @user.update(authy_id: authy.id)
+
+		     # Send an SMS to your user
+		      Authy::API.request_sms(id: @user.authy_id)
+
 			render :create
 		else
 			head(:unprocessable_entity)
@@ -36,7 +52,8 @@ class UsersController < ApplicationController
 									:firstname,
 									:lastname,
 									:phone_number,
-									:alternate_phone_number)
+									:alternate_phone_number,
+									:country_code)
 	end
 
 	def set_user
