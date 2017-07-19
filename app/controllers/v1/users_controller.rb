@@ -1,6 +1,6 @@
 module V1
 class UsersController < ApplicationController
-	skip_before_action :verify_jwt_token, except: [:update]
+	skip_before_action :current_user, except: [:update]
 	before_action :set_user, only: [:update]
 
 
@@ -19,15 +19,12 @@ class UsersController < ApplicationController
 			    cellphone: @user.phone_number,
 			    country_code: @user.country_code
 			  )
-			  puts @user.email
-			  puts @user.phone_number
-			  puts @user.country_code
-			  puts authy.id
+
 			  @user.update(authy_id: authy.id)
 
 		     # Send an SMS to your user
 		      Authy::API.request_sms(id: @user.authy_id)
-
+		      
 			render :create
 		else
 			head(:unprocessable_entity)

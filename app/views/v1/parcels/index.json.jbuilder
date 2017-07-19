@@ -23,3 +23,4 @@ json.array! @parcels do |parcel|
                 :item_number)
         end
 end
+

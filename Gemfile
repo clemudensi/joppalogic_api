@@ -50,5 +50,5 @@ gem 'jwt'
 gem 'devise-authy'
 gem 'envyable', '~> 1.2'
 # Use Twilio to send confirmation message
-gem 'twilio-ruby', '~>5.0.0'
+# gem 'twilio-ruby', '~>5.0.0'
 # gem 'awesome_print'
