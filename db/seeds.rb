@@ -10,6 +10,40 @@
 # 		password: "ayo@gmail.com"
 # 		)
 
+# Parcel.create("vehicle_type"=>"truck" ,
+#     "dimension_width"=>2.3,
+#     "dimension_height"=>3.3,
+#     "dimension_depth"=>4.3,
+#     "dimension_unit"=>"m",
+#     "parcel_description"=>"who cares",
+#     "weight_value"=>5.3,
+#     "weigh_unit"=>"kg",
+#     "parcel_number"=>"xxx-234",
+#     "category"=>"Regular",
+#     "parcel_from":{
+# 	    "name"=>"Ayodeji",
+# 	    "phone_number"=>"265231422",
+# 	    "alternate_phone_number"=>"888333888",
+# 	    "email"=>"email@yahoo.com",
+# 	    "street"=>"20 Banana Street",
+# 	    "city"=>"Accra",
+# 	    "state"=>"Greater Accra",
+# 	    "country"=>"Ghana",
+# 	    "address"=>"20 Banana Street Accra Ghana"
+#     },
+# 	"parcel_to":{
+# 		"name"=>"Joy",
+# 	    "phone_number"=>"265231422",
+# 	    "alternate_phone_number"=>"265231422",
+# 	    "email"=>"email@yahoo.com",
+# 	    "street"=>"20 Mango Street",
+# 	    "city"=>"Accra",
+# 	    "state"=>"Greater Accra",
+# 	    "country"=>"Ghana",
+# 	    "address"=>"20 Mango Street Accra Ghana"
+# 	},
+#     "created_by"=>1
+# )
 courier1 = Courier.create(
 			slug: "fedex slug",
 			name: "fedex",
