@@ -11,7 +11,7 @@ class CreateAddresses < ActiveRecord::Migration[5.0]
     	t.string 	:city
     	t.string 	:state
     	t.string 	:country
-    	t.boolean :validated
+    	t.boolean   :validated
     	t.integer	:parcel_id
 
       t.timestamps

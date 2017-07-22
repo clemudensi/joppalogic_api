@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20170718114601) do
   end
 
   create_table "parcels", force: :cascade do |t|
-    t.string   "box_type"
+    t.string   "vehicle_type"
     t.float    "dimension_width"
     t.float    "dimension_height"
     t.float    "dimension_depth"
@@ -71,9 +71,28 @@ ActiveRecord::Schema.define(version: 20170718114601) do
     t.float    "weight_value"
     t.string   "weigh_unit"
     t.string   "parcel_number"
-    t.integer  "user_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "category"
+    t.string   "sender_name"
+    t.string   "sender_phone_number"
+    t.string   "sender_alternate_phone_number"
+    t.string   "sender_email"
+    t.string   "sender_street"
+    t.string   "sender_city"
+    t.string   "sender_state"
+    t.string   "sender_country"
+    t.string   "sender_address"
+    t.string   "receiver_name"
+    t.string   "receiver_phone_number"
+    t.string   "receiver_alternate_phone_number"
+    t.string   "receiver_email"
+    t.string   "receiver_street"
+    t.string   "receiver_city"
+    t.string   "receiver_state"
+    t.string   "receiver_country"
+    t.string   "receiver_address"
+    t.integer  "created_by"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -84,11 +103,11 @@ ActiveRecord::Schema.define(version: 20170718114601) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
-    t.string   "encrypted_password",      default: "",    null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",           default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -97,20 +116,14 @@ ActiveRecord::Schema.define(version: 20170718114601) do
     t.string   "lastname"
     t.string   "phone_number"
     t.string   "alternate_phone_number"
-    t.string   "fax"
     t.string   "company_name"
     t.string   "street"
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.boolean  "validated"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.string   "authy_id"
-    t.datetime "last_sign_in_with_authy"
-    t.boolean  "authy_enabled",           default: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "country_code"
-    t.index ["authy_id"], name: "index_users_on_authy_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

@@ -15,12 +15,6 @@ Rails.application.routes.draw do
 		resources :users, only: [:index,:create,:update]
 		resources :parcels
 		resources :items, only: [:index]
-		resources :tokens , only: [] do
-			member do
-				post :verify, :resend
-			end
-		end
-
 		
 	end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -47,8 +47,3 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'devise'
 # gem 'simple_token_authentication', '~> 1.0'
 gem 'jwt'
-gem 'devise-authy'
-gem 'envyable', '~> 1.2'
-# Use Twilio to send confirmation message
-# gem 'twilio-ruby', '~>5.0.0'
-# gem 'awesome_print'
