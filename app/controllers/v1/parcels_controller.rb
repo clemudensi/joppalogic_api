@@ -58,35 +58,15 @@ class V1::ParcelsController < ApplicationController
 	def destroy
 	end
 
-	# private
+	def get_rates
+		@parcel = Parcel.new
 
-	# def parcel_params
-	# 	params.require(:parcel).permit(
-	# 								:vehicle_type,
-	# 							    :dimension_width,
-	# 							    :dimension_height,
-	# 							    :dimension_depth,
-	# 							    :dimension_unit,
-	# 							    :parcel_description,
-	# 							    :weight_value,
-	# 							    :weigh_unit,
-	# 							    :parcel_number,
-	# 							    :sender_name,
-	# 							    :sender_phone_number,
-	# 							    :sender_alternate_phone_number,
-	# 							    :sender_email,
-	# 							    :sender_street,
-	# 							    :sender_city,
-	# 							    :sender_state,
-	# 							    :sender_country,
-	# 							    :receiver_name,
-	# 							    :receiver_phone_number,
-	# 							    :receiver_alternate_phone_number,
-	# 							    :receiver_email,
-	# 							    :receiver_street,
-	# 							    :receiver_city,
-	# 							    :receiver_state,
-	# 							    :receiver_country,
-	# 							    :created_by)
-	# end
+		@parcel.vehicle_type			    						= params['vehicle_type']
+		@parcel.category		             					= params['category']
+		@parcel.receiver_address              		= params['parcel_to']['address']
+		@parcel.sender_address               			= params['parcel_from']['address']
+
+		@rate = (@parcel.vehicle_type + @parcel.category + @parcel.receiver_address + @parcel.sender_address).length
+		render :rate
+	end
 end

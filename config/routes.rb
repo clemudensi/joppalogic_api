@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
 		resources :couriers, only: [:index]
 		resources :users, only: [:index,:create,:update]
-		resources :parcels
+		resources :parcels do
+			collection do
+				post :get_rates
+			end
+		end
 		resources :items, only: [:index]
 		
 	end
