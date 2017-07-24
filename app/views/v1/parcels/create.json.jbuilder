@@ -39,5 +39,7 @@ json.data do
       json.rates @rates do |r|
         json.amount r.slug
       end
+
+      json.user @user.phone_number
 	end
 end

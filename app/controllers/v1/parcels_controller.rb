@@ -37,10 +37,21 @@ class V1::ParcelsController < ApplicationController
       @parcel.receiver_state                		= params['parcel_to']['state']
       @parcel.receiver_country              		= params['parcel_to']['country']
       @parcel.receiver_address              		= params['parcel_to']['address']
-      @parcel.created_by                    		= params['created_by']
+      # @parcel.created_by                    		= params['created_by']
 		if @parcel.save
 
 			#save the user if this is the first instance of its occurence
+			# @user = User.where(:sender_phone_number params['parcel_from']['phone_number'])
+			 @user = User.find_by_phone_number(params['parcel_from']['phone_number'])
+			 if !@user
+			 		@user = User.new()
+			 		@user.email = params['parcel_from']['email']
+			 		@user.password = "ayod@gil.com"
+			 		@user.phone_number = params['parcel_from']['phone_number']
+
+			 		@user.save
+			 	end
+
 			@rates = Courier.all
 			render :create, status: :created
 		else
