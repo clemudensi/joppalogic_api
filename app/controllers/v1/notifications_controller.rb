@@ -2,7 +2,9 @@ class V1::NotificationsController < ApplicationController
 	skip_before_action :current_user
 	
 	def message
-		send_message
+		#try it in school to verify what is obstruction the sending
+		@the_message = send_message
+		render :message_notice
 	end
 
 	private
