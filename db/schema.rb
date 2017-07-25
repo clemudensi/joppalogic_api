@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718114601) do
+ActiveRecord::Schema.define(version: 20170724161005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,15 @@ ActiveRecord::Schema.define(version: 20170718114601) do
     t.datetime "updated_at",                      null: false
   end
 
+  create_table "rates", force: :cascade do |t|
+    t.string   "from_location"
+    t.string   "to_location"
+    t.integer  "courier_id"
+    t.float    "price"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -129,4 +138,5 @@ ActiveRecord::Schema.define(version: 20170718114601) do
   end
 
   add_foreign_key "items", "parcels"
+  add_foreign_key "rates", "couriers"
 end

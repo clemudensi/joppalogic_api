@@ -11,14 +11,16 @@ Rails.application.routes.draw do
         	
   		end
 
-		resources :couriers, only: [:index]
+		resources :couriers, only: [:index,:show]
 		resources :users, only: [:index,:create,:update]
 		resources :parcels do
 			collection do
 				post :get_rates
 			end
 		end
-		resources :items, only: [:index]
+		# resources :items, only: [:index]
+		resources :rates
+		
 		
 	end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

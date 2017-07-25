@@ -1,4 +1,6 @@
 class V1::CouriersController < ApplicationController
+	skip_before_action :current_user
+	before_action :set_courier, only: [:show]
 	def index
 		@couriers = Courier.all
 		render :index, status: :ok
@@ -10,7 +12,7 @@ class V1::CouriersController < ApplicationController
 	end
 
 	def show
-
+		render :show
 	end
 
 	private
@@ -20,6 +22,6 @@ class V1::CouriersController < ApplicationController
 	end
 
 	def set_courier
-		
+		@courier = Courier.find(params[:id])
 	end
 end

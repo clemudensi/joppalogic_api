@@ -48,7 +48,7 @@ class V1::ParcelsController < ApplicationController
 			 		@user.email = params['parcel_from']['email']
 			 		@user.password = "ayod@gil.com"
 			 		@user.phone_number = params['parcel_from']['phone_number']
-
+			 		@user.country_code = params['+234']
 			 		@user.save
 			 	end
 
@@ -77,7 +77,22 @@ class V1::ParcelsController < ApplicationController
 		@parcel.receiver_address              		= params['parcel_to']['address']
 		@parcel.sender_address               			= params['parcel_from']['address']
 
-		@rate = (@parcel.vehicle_type + @parcel.category + @parcel.receiver_address + @parcel.sender_address).length
+		
+		@rate = get_prices(@parcel.sender_address,@parcel.receiver_address,@parcel.vehicle_type)
 		render :rate
+		# if @rate.count > 1
+		# 	render :rate
+		# else
+		# 	render json: {status: "error", code: 400, message: "No value was returned. Please check address"}
+		# end
+
+	end
+
+	private
+
+	def get_prices(from,to,vehicle_type)
+		from = from.downcase!
+		to = to.downcase!
+		rate = Rate.where("from_location = ? AND to_location = ?", from, to)
 	end
 end

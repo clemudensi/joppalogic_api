@@ -9,6 +9,6 @@ class User < ApplicationRecord
 	# has_many :roles
 
 # 	validates :username,  :presence => true, :uniqueness => true
-	validates :phone_number,     :presence => true, :uniqueness => true
-	validates :country_code,     :presence => true
+	# validates :phone_number,     :presence => true, :uniqueness => true
+	# validates :country_code,     :presence => true
 end

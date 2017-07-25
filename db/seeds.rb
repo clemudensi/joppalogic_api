@@ -9,53 +9,63 @@
 # 		email: "ayo@gmail.com",
 # 		password: "ayo@gmail.com"
 # 		)
+Rate.delete_all
+Courier.delete_all
+Parcel.delete_all
+User.delete_all
 
-# Parcel.create("vehicle_type"=>"truck" ,
-#     "dimension_width"=>2.3,
-#     "dimension_height"=>3.3,
-#     "dimension_depth"=>4.3,
-#     "dimension_unit"=>"m",
-#     "parcel_description"=>"who cares",
-#     "weight_value"=>5.3,
-#     "weigh_unit"=>"kg",
-#     "parcel_number"=>"xxx-234",
-#     "category"=>"Regular",
-#     "parcel_from":{
-# 	    "name"=>"Ayodeji",
-# 	    "phone_number"=>"265231422",
-# 	    "alternate_phone_number"=>"888333888",
-# 	    "email"=>"email@yahoo.com",
-# 	    "street"=>"20 Banana Street",
-# 	    "city"=>"Accra",
-# 	    "state"=>"Greater Accra",
-# 	    "country"=>"Ghana",
-# 	    "address"=>"20 Banana Street Accra Ghana"
-#     },
-# 	"parcel_to":{
-# 		"name"=>"Joy",
-# 	    "phone_number"=>"265231422",
-# 	    "alternate_phone_number"=>"265231422",
-# 	    "email"=>"email@yahoo.com",
-# 	    "street"=>"20 Mango Street",
-# 	    "city"=>"Accra",
-# 	    "state"=>"Greater Accra",
-# 	    "country"=>"Ghana",
-# 	    "address"=>"20 Mango Street Accra Ghana"
-# 	},
-#     "created_by"=>1
-# )
 courier1 = Courier.create(
-			slug: "fedex slug",
-			name: "fedex",
+			slug: "jerry",
+			name: "Jerry Express",
 			phone: "+233 (0) 265231422",
-			web_url: "http://www.fedex.com",
-			description: "Internation ni o",
+			web_url: "http://www.jerry.com",
+			description: "Jerry delivers within Ghana",
 			active: true,
 			account_id: "12345",
 			capabilities: ["International shipping","Local shipping"],
 			parameters: {username: "joppalogic",
 										password: "joppa+logic"}
 			)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Madina",
+			price: 7.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Adjinganor",
+			price: 6.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Adenta",
+			price: 10.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Frafraha",
+			price: 12.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Dodowa",
+			price: 20.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Legon",
+			price: 5.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Hatso",
+			price: 8.00)
+
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "Westlands",
+			price: 5.00)
 
 courier2 = Courier.create(
 			slug: "ups slug",
