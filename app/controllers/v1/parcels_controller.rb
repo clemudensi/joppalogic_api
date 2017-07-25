@@ -86,7 +86,12 @@ class V1::ParcelsController < ApplicationController
 		to =get_locality(to_lat,to_lng)
 
 		@rate = get_prices(from,to,vehicle_type)
+
+		message = "Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+		notify_slack(message)
 		render :rate
+
+		
 
 		# if @rate.count > 1
 		# 	render :rate
@@ -110,4 +115,13 @@ class V1::ParcelsController < ApplicationController
 		rate = Rate.where("from_location = ? AND to_location = ?", from, to)
 	end
 
+ def notify_slack(message)
+ 		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+  	defaults channel: "#logs",
+           username: "get_rates_endpoint"
+		end
+
+
+		notifier.ping message
+ end
 end
