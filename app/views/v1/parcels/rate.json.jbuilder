@@ -5,3 +5,5 @@ json.rate @rate do |r|
 	json.price 	r.price
 	json.courier_id r.courier_id
 end
+
+# json.rate @rate

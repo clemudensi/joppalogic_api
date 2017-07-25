@@ -24,8 +24,12 @@ courier1 = Courier.create(
 			account_id: "12345",
 			capabilities: ["International shipping","Local shipping"],
 			parameters: {username: "joppalogic",
-										password: "joppa+logic"}
+						password: "joppa+logic"}
 			)
+courier1.rates.create(
+			from_location: "East Legon",
+			to_location: "East Legon",
+			price: 5.00)
 
 courier1.rates.create(
 			from_location: "East Legon",
