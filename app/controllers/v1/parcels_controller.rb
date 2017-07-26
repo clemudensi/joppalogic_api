@@ -84,18 +84,7 @@ class V1::ParcelsController < ApplicationController
 			message = "Invalid Data: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
 			notify_slack(message)
 		end
-
-		# @rate = @rate.size
-
-		# message = "Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
-		# notify_slack(message)
-		# render :rate
-
-		# if @rate.size > 0
-		# 	render :rate
-		# else
-		# 	render json: {status: "error", code: 400, message: "No value was returned. Please check address"}
-		# end
+		
 		render :rate
 
 	end
@@ -116,8 +105,8 @@ class V1::ParcelsController < ApplicationController
 	end
 
  def notify_slack(message)
- 		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-  	defaults channel: "#staging_log",
+ 		notifier = Slack::Notifier.new " https://hooks.slack.com/services/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" do
+  		defaults channel: "#production_log",
            username: "get_rates_endpoint"
 		end
 
