@@ -18,31 +18,17 @@ class V1::ParcelsController < ApplicationController
 			@parcel.parcel_description	           		= params['parcel_description']
 			@parcel.weight_value		               		= params['weight_value']
 			@parcel.weigh_unit			               		= params['weigh_unit']
-			@parcel.parcel_number		             			= params['parcel_number']
 			@parcel.category		             					= params['category']
       @parcel.sender_name                   		= params['parcel_from']['name']
       @parcel.sender_phone_number           		= params['parcel_from']['phone_number']
-      @parcel.sender_alternate_phone_number 		= params['parcel_from']['alternate_phone_number']
       @parcel.sender_email                  		= params['parcel_from']['email']
-      @parcel.sender_street                 		= params['parcel_from']['street']
-      @parcel.sender_city                   		= params['parcel_from']['city']
-      @parcel.sender_state                  		= params['parcel_from']['state']
-      @parcel.sender_country                		= params['parcel_from']['country']
-      @parcel.sender_address               			= params['parcel_from']['address']
-      @parcel.sender_longitude               		= params['parcel_from']['longitude']
-      @parcel.sender_latitude              			= params['parcel_from']['latitude']
       @parcel.receiver_name                 		= params['parcel_to']['name']
       @parcel.receiver_phone_number         		= params['parcel_to']['phone_number']
-      @parcel.receiver_alternate_phone_number 	= params['parcel_to']['alternate_phone_number']
       @parcel.receiver_email                		= params['parcel_to']['email']
-      @parcel.receiver_street               		= params['parcel_to']['street']
-      @parcel.receiver_city                 		= params['parcel_to']['city']
-      @parcel.receiver_state                		= params['parcel_to']['state']
-      @parcel.receiver_country              		= params['parcel_to']['country']
-      @parcel.receiver_address              		= params['parcel_to']['address']
-      @parcel.receiver_longitude               	= params['parcel_to']['longitude']
-      @parcel.receiver_latitude              		= params['parcel_to']['latitude']
       @parcel.created_by                    		= params['created_by']
+      rate = Rate.friendly.find(params['rate_id'])
+      @parcel.rate_id                    				= rate.id
+
 		if @parcel.save
 
 			#save the user if this is the first instance of its occurence
@@ -53,7 +39,6 @@ class V1::ParcelsController < ApplicationController
 			 		@user.email = params['parcel_from']['email']
 			 		@user.password = "ayod@gil.com"
 			 		@user.phone_number = params['parcel_from']['phone_number']
-			 		@user.country_code = params['+234']
 			 		@user.save
 			 	end
 
@@ -77,27 +62,41 @@ class V1::ParcelsController < ApplicationController
 	def get_rates
 		vehicle_type			= params['vehicle_type']
 		category		      = params['category']
- 		from_lng      						= params['parcel_from']['lng']
-    from_lat          				= params['parcel_from']['lat']
-    to_lng 										= params['parcel_to']['lng']
-    to_lat  									= params['parcel_to']['lat']
+ 		from_lng      		= params['parcel_from']['lng']
+    from_lat          = params['parcel_from']['lat']
+    to_lng 						= params['parcel_to']['lng']
+    to_lat  					= params['parcel_to']['lat']
 
-		from = get_locality(from_lat,from_lng)
-		to =get_locality(to_lat,to_lng)
+    if(from_lat.length > 1 && from_lng.length > 1 && to_lat.length > 1 && to_lng.length > 1)
+			from = get_locality(from_lat,from_lng)
+			to =get_locality(to_lat,to_lng)
 
-		@rate = get_prices(from,to,vehicle_type)
+			@rate = get_prices(from,to,vehicle_type)
+			if @rate.size > 0
+				@meta = {code: "200", message: "Address successfully retrieved."}
+			else
+				@meta = {code: "204", message: "Rates not available"}
+				message = "Unavailable rates: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+				notify_slack(message)
+			end
+		else
+			@meta = {code: "400", message: "Invalid Address."}
+			message = "Invalid Data: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+			notify_slack(message)
+		end
+
+		# @rate = @rate.size
 
 		# message = "Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
 		# notify_slack(message)
-		render :rate
+		# render :rate
 
-		
-
-		# if @rate.count > 1
+		# if @rate.size > 0
 		# 	render :rate
 		# else
 		# 	render json: {status: "error", code: 400, message: "No value was returned. Please check address"}
 		# end
+		render :rate
 
 	end
 
@@ -105,7 +104,7 @@ class V1::ParcelsController < ApplicationController
 
 		def get_locality(the_lat,the_lng)
 		key = "AIzaSyD64zGY94u6kt_BgVyNhilzxhBEJfD0ST4"
-		area = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ the_lat +",%20"+ the_lng +"&key="+ key)
+		area = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ the_lat +","+ the_lng +"&key="+ key)
 		area  = area["results"][1]["address_components"][0]["long_name"]
 	end
 
@@ -113,11 +112,12 @@ class V1::ParcelsController < ApplicationController
 		from = from.downcase!
 		to = to.downcase!
 		rate = Rate.where("from_location = ? AND to_location = ?", from, to)
+		rate
 	end
 
  def notify_slack(message)
  		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-  	defaults channel: "#logs",
+  	defaults channel: "#staging_log",
            username: "get_rates_endpoint"
 		end
 

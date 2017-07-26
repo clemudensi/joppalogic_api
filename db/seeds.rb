@@ -15,13 +15,11 @@ Parcel.delete_all
 User.delete_all
 
 courier1 = Courier.create(
-			slug: "jerry",
 			name: "Jerry Express",
 			phone: "+233 (0) 265231422",
 			web_url: "http://www.jerry.com",
 			description: "Jerry delivers within Ghana",
 			active: true,
-			account_id: "12345",
 			capabilities: ["International shipping","Local shipping"],
 			parameters: {username: "joppalogic",
 						password: "joppa+logic"}
@@ -70,27 +68,3 @@ courier1.rates.create(
 			from_location: "East Legon",
 			to_location: "Westlands",
 			price: 5.00)
-
-courier2 = Courier.create(
-			slug: "ups slug",
-			name: "UPS",
-			phone: "+233 (0) 265231422",
-			web_url: "http://www.jups.com",
-			description: "Internation ni o",
-			active: true,
-			account_id: "12345",
-			capabilities: ["International shipping","Local shipping"],
-			parameters: {username: "joppalogic",
-										password: "joppa+logic"}
-			)
-
-courier2 = Courier.create(
-			slug: "dhl slug",
-			name: "dhl",
-			phone: "+233 (0) 265231422",
-			web_url: "http://www.dhl.com",
-			description: "Internation ni o",
-			active: true,
-			account_id: "12345",
-			capabilities: ["International shipping","Local shipping"]
-			)

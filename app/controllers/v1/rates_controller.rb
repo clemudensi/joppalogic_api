@@ -1,5 +1,5 @@
 class V1::RatesController < ApplicationController
-	before_action :set_rate, only: [:update]
+	before_action :set_rate, only: [:update,:show]
 	skip_before_action :current_user
 
 	def index
@@ -13,6 +13,9 @@ class V1::RatesController < ApplicationController
 		else
 			head(:unprocessable_entity)
 		end
+	end
+
+	def show
 	end
 
 	def update
@@ -33,6 +36,6 @@ class V1::RatesController < ApplicationController
 	end
 
 	def set_rate
-		@rate = Rate.find(params[:id])
+		@rate = Rate.friendly.find(params[:id])
 	end
 end

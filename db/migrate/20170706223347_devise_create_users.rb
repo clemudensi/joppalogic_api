@@ -36,10 +36,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       t.string  :alternate_phone_number
       t.string  :email
       t.string  :company_name
-      t.string  :street
-      t.string  :city
-      t.string  :state
-      t.string  :country
 
       t.timestamps null: false
     end
@@ -50,3 +46,5 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
     # add_index :users, :unlock_token,         unique: true
   end
 end
+
+

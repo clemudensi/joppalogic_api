@@ -7,9 +7,7 @@ class CreateCouriers < ActiveRecord::Migration[5.0]
     	t.string 	:phone
     	t.string 	:web_url
     	t.string 	:description
-    	t.string 	:courier_id
     	t.boolean	:active
-    	t.string 	:account_id
     	t.text		:capabilities, array: true, default: []
     	t.json		:parameters
 

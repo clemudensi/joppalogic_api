@@ -5,10 +5,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # has_many :parcels
+  has_many :parcels
 	# has_many :roles
 
-# 	validates :username,  :presence => true, :uniqueness => true
+	# validates :username,  :presence => true, :uniqueness => true
 	# validates :phone_number,     :presence => true, :uniqueness => true
 	# validates :country_code,     :presence => true
 end

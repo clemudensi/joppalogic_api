@@ -7,20 +7,7 @@ json.array! @parcels do |parcel|
     	json.parcel_description	parcel.parcel_description
     	json.weight_value		parcel.weight_value
     	json.weigh_unit			parcel.weigh_unit
-    	json.parcel_number		parcel.parcel_number
     	json.created_by			parcel.created_by
-
-        # json.items parcel.items do |item|
-        #     json.(item,
-        #         :description, 
-        #         :quantity, 
-        #         :price, 
-        #         :currency, 
-        #         :weight, 
-        #         :unit, 
-        #         :parcel_number, 
-        #         :parcel_id, 
-        #         :item_number)
-        # end
+    	json.rate_id			parcel.rate_id
 end
 
