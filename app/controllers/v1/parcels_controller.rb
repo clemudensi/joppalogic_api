@@ -77,10 +77,10 @@ class V1::ParcelsController < ApplicationController
 	def get_rates
 		vehicle_type			= params['vehicle_type']
 		category		      = params['category']
- 		from_lng      						= params['parcel_from']['longitude']
-    from_lat          				= params['parcel_from']['latitude']
-    to_lng 										= params['parcel_to']['longitude']
-    to_lat  									= params['parcel_to']['latitude']
+ 		from_lng      						= params['parcel_from']['lng']
+    from_lat          				= params['parcel_from']['lat']
+    to_lng 										= params['parcel_to']['lng']
+    to_lat  									= params['parcel_to']['lat']
 
 		from = get_locality(from_lat,from_lng)
 		to =get_locality(to_lat,to_lng)
