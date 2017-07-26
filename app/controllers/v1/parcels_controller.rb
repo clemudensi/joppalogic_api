@@ -87,8 +87,8 @@ class V1::ParcelsController < ApplicationController
 
 		@rate = get_prices(from,to,vehicle_type)
 
-		message = "Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
-		notify_slack(message)
+		# message = "Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+		# notify_slack(message)
 		render :rate
 
 		
