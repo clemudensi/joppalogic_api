@@ -76,12 +76,12 @@ class V1::ParcelsController < ApplicationController
 				@meta = {code: "200", message: "Address successfully retrieved."}
 			else
 				@meta = {code: "204", message: "Rates not available"}
-				message = "Unavailable rates: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+				message = "Unavailable rates: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
 				notify_slack(message)
 			end
 		else
 			@meta = {code: "400", message: "Invalid Address."}
-			message = "Invalid Data: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat #{to_lat}, lng: #{to_lng}"
+			message = "Invalid Data: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
 			notify_slack(message)
 		end
 
