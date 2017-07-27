@@ -1,0 +1,14 @@
+development:
+  WEBHOOK_URL: https://hooks.slack.com/services/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
+  CHANNEL_NAME: development_logs
+  CHANNEL_USERNAME: get_rates_endpoint
+
+staging:
+  WEBHOOK_URL: https://hooks.slack.com/services/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
+  CHANNEL_NAME: staging_log
+  CHANNEL_USERNAME: get_rates_endpoint
+
+production:
+  WEBHOOK_URL: https://hooks.slack.com/services/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
+  CHANNEL_NAME: production_log
+  CHANNEL_USERNAME: get_rates_endpoint

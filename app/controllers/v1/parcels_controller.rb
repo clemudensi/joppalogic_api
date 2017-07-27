@@ -105,7 +105,7 @@ class V1::ParcelsController < ApplicationController
 	end
 
  def notify_slack(message)
- 		notifier = Slack::Notifier.new " https://hooks.slack.com/services/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" do
+ 		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
   		defaults channel: "#production_log",
            username: "get_rates_endpoint"
 		end
