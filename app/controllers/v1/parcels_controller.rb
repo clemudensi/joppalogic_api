@@ -75,7 +75,7 @@ class V1::ParcelsController < ApplicationController
 			if @rate.size > 0
 				@meta = {code: "200", message: "Address successfully retrieved."}
 			else
-				@meta = {code: "204", message: "Rates not available"}
+				@meta = {code: "204", message: "Realtime rates not available for this route."}
 				message = "Unavailable rates: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
 				notify_slack(message)
 			end
