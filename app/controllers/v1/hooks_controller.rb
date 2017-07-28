@@ -4,11 +4,11 @@ class V1::HooksController < ApplicationController
 	def get_parcel
 	    if request.headers['Content-Type'] == 'application/json'
 	      @data = JSON.parse(request.body.read)
-	      notify_slack(@data.to_s)
+	      notify_slack(@data.to_s + "/n from json condition")
 	    else
 	      # application/x-www-form-urlencoded
 	      @data = params.as_json
-	      notify_slack(@data.to_s)
+	      notify_slack(@data.to_s + "/n from params condition")
 	    end
 
 	    # Webhook::Received.save(data: data, integration: params[:integration_name])
