@@ -58,3 +58,6 @@ Available endpoints formats are as specified in the stoplight of this project bu
 5.556925, -0.175337 Vanity Pub
 5.557913, -0.17232	Impact Hub
 5.570632, -0.187683 Osu Klottey
+
+
+echo "api_key: jRXkShLK4CT4g4aalwxWf141tKhc8rgv" > ~/.ultrahook

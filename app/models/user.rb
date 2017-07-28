@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :parcels
-	# has_many :roles
+	has_many :roles, through: :user_roles
 
 	# validates :username,  :presence => true, :uniqueness => true
 	# validates :phone_number,     :presence => true, :uniqueness => true

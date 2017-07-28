@@ -110,7 +110,6 @@ class V1::ParcelsController < ApplicationController
            username: "get_rates_endpoint"
 		end
 
-
 		notifier.ping message
  end
 end
