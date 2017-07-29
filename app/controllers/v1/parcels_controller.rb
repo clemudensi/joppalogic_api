@@ -1,6 +1,6 @@
 class V1::ParcelsController < ApplicationController
 	require 'httparty'
-	# skip_before_action :current_user, except: [:get_user_parcels]
+	skip_before_action :current_user, except: [:get_user_parcels, :index]
 
 	def index
 		@parcels = Parcel.all
