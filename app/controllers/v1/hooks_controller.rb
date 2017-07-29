@@ -42,7 +42,7 @@ class V1::HooksController < ApplicationController
       @parcel.receiver_email                		= data["email"]
       @parcel.receiver_address                		= data["human_fields"]["Dropoff Address"]
 
-      rate = Rate.friendly.find(params['rate_id'])
+      rate = Rate.friendly.find(data["human_fields"]["Delivery Cost"])
       @parcel.rate_id                    				= rate.id
       @parcel.real_user_id = @user.id
 
