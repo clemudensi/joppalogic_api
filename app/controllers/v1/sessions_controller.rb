@@ -7,9 +7,9 @@ class V1::SessionsController < Devise::SessionsController
 
 	def create
 
-		user = User.where(email: params[:email]).first
+		user = RealUser.where(email: params[:email]).first
 
-		 if user&.valid_password?(params[:password]) #user && user.valid
+		 if user && user.authenticate(params[:password]) #user && user.valid
 			@auth_token = AuthToken.issue_token({user_id: user.id})
 
 			render :create, status: :created
