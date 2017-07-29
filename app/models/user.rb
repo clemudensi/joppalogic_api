@@ -1,12 +1,15 @@
 class User < ApplicationRecord
+
+###DEprecated in the code...No longer using devise authentication
+
 	# acts_as_token_authenticatable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  # devise :database_authenticatable, :registerable,
+  #        :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :parcels
-	has_many :roles, through: :user_roles
+ #  has_many :parcels
+	# has_many :roles, through: :user_roles
 
 	# validates :username,  :presence => true, :uniqueness => true
 	# validates :phone_number,     :presence => true, :uniqueness => true

@@ -1,18 +1,17 @@
 module V1
 class UsersController < ApplicationController
-	skip_before_action :current_user, except: [:update]
+	skip_before_action :current_user, only: [:create]
 	before_action :set_user, only: [:update]
 
 
 	def index
-		@users = User.all
+		@users = RealUser.all
 	end
 
 	def create
-		@user = User.new(user_params)
+		@user = RealUser.new(user_params)
 
 		if @user.save
-				      
 			render :create
 		else
 			head(:unprocessable_entity)
@@ -27,22 +26,39 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def create_user_role
+		@user_role =  UserRole.new
+		@user_role.user_id = params["user_id"]
+		@user_role.role_id = params["role_id"]
+	end
+
+	def delete_user_role
+		@user = UserRole.find_by_id(params[:id])
+
+		# if @user.destroy
+		# 	# render :json{""}
+		# end
+	end
+
 	private
 
 	def user_params
 		params.require(:user).permit(
 									:email, 
 									:password, 
-									:password_confirmation,
-									:firstname,
-									:lastname,
+									:full_name,
 									:phone_number,
-									:alternate_phone_number,
 									:country_code)
 	end
 
+	def user_role_params
+		permit.require(:user_role).permit(
+								:user_id,
+								:role_id)
+	end
+
 	def set_user
-		@user = User.find(params[:id])
+		@user = RealUser.find(params[:id])
 	end
 end
 end

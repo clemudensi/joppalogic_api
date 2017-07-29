@@ -1,6 +1,6 @@
 class V1::ParcelsController < ApplicationController
 	require 'httparty'
-	skip_before_action :current_user
+	# skip_before_action :current_user, except: [:get_user_parcels]
 
 	def index
 		@parcels = Parcel.all
@@ -33,11 +33,11 @@ class V1::ParcelsController < ApplicationController
 
 			#save the user if this is the first instance of its occurence
 			# @user = User.where(:sender_phone_number params['parcel_from']['phone_number'])
-			 @user = User.find_by_phone_number(params['parcel_from']['phone_number'])
+			 @user = RealUser.find_by_phone_number(params['parcel_from']['phone_number'])
 			 if !@user
-			 		@user = User.new()
-			 		@user.email = params['parcel_from']['email']
-			 		@user.password = "ayod@gil.com"
+			 		@user = RealUser.new()
+			 		@user.full_name =	params['parcel_from']['name']
+			 		@user.password =	"not_needed"
 			 		@user.phone_number = params['parcel_from']['phone_number']
 			 		@user.save
 			 	end
@@ -87,6 +87,16 @@ class V1::ParcelsController < ApplicationController
 		
 		render :rate
 
+	end
+
+	def get_user_parcels
+		user = RealUser.find_by_phone_number(params['phone_number'])
+		if user
+			@parcels = Parcel.find_by_sender_phone_number(params['phone_number'])
+		else
+		end
+
+		render :user_parcels
 	end
 
 	private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728125658) do
+ActiveRecord::Schema.define(version: 20170729125543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,9 +48,9 @@ ActiveRecord::Schema.define(version: 20170728125658) do
     t.string   "receiver_email"
     t.string   "receiver_address"
     t.integer  "rate_id"
-    t.integer  "created_by"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "real_user_id"
   end
 
   create_table "rates", force: :cascade do |t|
@@ -64,6 +64,16 @@ ActiveRecord::Schema.define(version: 20170728125658) do
     t.index ["slug"], name: "index_rates_on_slug", unique: true, using: :btree
   end
 
+  create_table "real_users", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "country_code"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -71,12 +81,12 @@ ActiveRecord::Schema.define(version: 20170728125658) do
   end
 
   create_table "user_roles", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "real_user_id"
     t.integer  "role_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["real_user_id"], name: "index_user_roles_on_real_user_id", using: :btree
     t.index ["role_id"], name: "index_user_roles_on_role_id", using: :btree
-    t.index ["user_id"], name: "index_user_roles_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,7 +112,8 @@ ActiveRecord::Schema.define(version: 20170728125658) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "parcels", "real_users"
   add_foreign_key "rates", "couriers"
+  add_foreign_key "user_roles", "real_users"
   add_foreign_key "user_roles", "roles"
-  add_foreign_key "user_roles", "users"
 end

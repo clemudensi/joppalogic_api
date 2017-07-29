@@ -74,4 +74,3 @@ Role.create(name: "logistics_super_admin")
 Role.create(name: "logistics_admin")
 Role.create(name: "logistics_staff")
 Role.create(name: "logistics_super_admin")
-

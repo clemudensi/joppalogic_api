@@ -1,6 +1,6 @@
 class V1::RatesController < ApplicationController
 	before_action :set_rate, only: [:update,:show]
-	skip_before_action :current_user
+	# skip_before_action :current_user
 
 	def index
 		@rates = Rate.all
@@ -11,6 +11,7 @@ class V1::RatesController < ApplicationController
 		if @rate.save
 			render :create, status: :created
 		else
+			render :create 
 			head(:unprocessable_entity)
 		end
 	end
@@ -19,7 +20,7 @@ class V1::RatesController < ApplicationController
 	end
 
 	def update
-		if @user.update(rate_params)
+		if @rate.update(rate_params)
 			render :update
 		else
 			head(:unprocessable_entity)
