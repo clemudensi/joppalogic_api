@@ -15,6 +15,7 @@ class V1::HooksController < ApplicationController
 	    # render :get_parcel
 	end
 
+
 	private 
 
 	def receive_json(data)

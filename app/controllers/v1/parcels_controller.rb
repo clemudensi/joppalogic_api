@@ -19,15 +19,15 @@ class V1::ParcelsController < ApplicationController
 			@parcel.weight_value		               		= params['weight_value']
 			@parcel.weigh_unit			               		= params['weigh_unit']
 			@parcel.category		             					= params['category']
-      @parcel.sender_name                   		= params['parcel_from']['name']
-      @parcel.sender_phone_number           		= params['parcel_from']['phone_number']
-      @parcel.sender_email                  		= params['parcel_from']['email']
-      @parcel.receiver_name                 		= params['parcel_to']['name']
-      @parcel.receiver_phone_number         		= params['parcel_to']['phone_number']
-      @parcel.receiver_email                		= params['parcel_to']['email']
-      @parcel.created_by                    		= params['created_by']
-      rate = Rate.friendly.find(params['rate_id'])
-      @parcel.rate_id                    				= rate.id
+      		@parcel.sender_name                   		= params['parcel_from']['name']
+      		@parcel.sender_phone_number           		= params['parcel_from']['phone_number']
+	        @parcel.sender_email                  		= params['parcel_from']['email']
+	      @parcel.receiver_name                 		= params['parcel_to']['name']
+	      @parcel.receiver_phone_number         		= params['parcel_to']['phone_number']
+	      @parcel.receiver_email                		= params['parcel_to']['email']
+	      @parcel.created_by                    		= params['created_by']
+	      rate = Rate.friendly.find(params['rate_id'])
+	      @parcel.rate_id                    				= rate.id
 
 		if @parcel.save
 
@@ -60,12 +60,12 @@ class V1::ParcelsController < ApplicationController
 	end
 
 	def get_rates
-		vehicle_type			= params['vehicle_type']
-		category		      = params['category']
+		vehicle_type		= params['vehicle_type']
+		category		    = params['category']
  		from_lng      		= params['parcel_from']['lng']
-    from_lat          = params['parcel_from']['lat']
-    to_lng 						= params['parcel_to']['lng']
-    to_lat  					= params['parcel_to']['lat']
+    	from_lat          	= params['parcel_from']['lat']
+    	to_lng 				= params['parcel_to']['lng']
+    	to_lat  			= params['parcel_to']['lat']
 
     if(from_lat.length > 1 && from_lng.length > 1 && to_lat.length > 1 && to_lng.length > 1)
 			from = get_locality(from_lat,from_lng)
@@ -86,7 +86,6 @@ class V1::ParcelsController < ApplicationController
 		end
 		
 		render :rate
-
 	end
 
 	def get_user_parcels
@@ -99,9 +98,11 @@ class V1::ParcelsController < ApplicationController
 		render :user_parcels
 	end
 
+
+
 	private
 
-		def get_locality(the_lat,the_lng)
+	def get_locality(the_lat,the_lng)
 		key = "AIzaSyD64zGY94u6kt_BgVyNhilzxhBEJfD0ST4"
 		area = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ the_lat +","+ the_lng +"&key="+ key)
 		area  = area["results"][1]["address_components"][0]["long_name"]
@@ -114,12 +115,12 @@ class V1::ParcelsController < ApplicationController
 		rate
 	end
 
- def notify_slack(message)
+ 	def notify_slack(message)
  		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
   		defaults channel: "#production_log",
            username: "get_rates_endpoint"
 		end
 
 		notifier.ping message
- end
+ 	end
 end
