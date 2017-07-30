@@ -1,6 +1,6 @@
 class V1::RatesController < ApplicationController
 	before_action :set_rate, only: [:update,:show]
-	skip_before_action :current_user
+	# skip_before_action :current_user
 
 	def index
 		@rates = Rate.all
