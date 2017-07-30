@@ -83,14 +83,12 @@ class V1::ParcelsController < ApplicationController
 	def get_rates
 		vehicle_type		= params['vehicle_type']
 		category		    = params['category']
- 		from_lng      		= params['parcel_from']['lng']
-    	from_lat          	= params['parcel_from']['lat']
-    	to_lng 				= params['parcel_to']['lng']
-    	to_lat  			= params['parcel_to']['lat']
+ 		from_area      		= params['parcel_from']['area']
+    	to_area  			= params['parcel_to']['area']
 
-    if(from_lat.length > 1 && from_lng.length > 1 && to_lat.length > 1 && to_lng.length > 1)
-			from = get_locality(from_lat,from_lng)
-			to =get_locality(to_lat,to_lng)
+    if(from_area.length > 1 && to_area.length > 1)
+			from = Area.find_by_slug(from_area)
+			to = Area.find_by_slug(to_area)
 
 			@rate = get_prices(from,to,vehicle_type)
 			if @rate.size > 0
@@ -123,16 +121,14 @@ class V1::ParcelsController < ApplicationController
 
 	private
 
-	def get_locality(the_lat,the_lng)
-		key = "AIzaSyD64zGY94u6kt_BgVyNhilzxhBEJfD0ST4"
-		area = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ the_lat +","+ the_lng +"&key="+ key)
-		area  = area["results"][1]["address_components"][0]["long_name"]
-	end
+	# def get_locality(the_lat,the_lng)
+	# 	key = "AIzaSyD64zGY94u6kt_BgVyNhilzxhBEJfD0ST4"
+	# 	area = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ the_lat +","+ the_lng +"&key="+ key)
+	# 	area  = area["results"][1]["address_components"][0]["long_name"]
+	# end
 
 	def get_prices(from,to,vehicle_type)
-		from = from.downcase!
-		to = to.downcase!
-		rate = Rate.where("from_location = ? AND to_location = ?", from, to)
+		rate = Rate.where("from_area_id = ? AND to_area_id = ?", from, to)
 		rate
 	end
 

@@ -10,11 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170729125543) do
+ActiveRecord::Schema.define(version: 20170730214545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.string   "area_type"
+    t.string   "region"
+    t.string   "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "couriers", force: :cascade do |t|
     t.string   "slug"
@@ -54,13 +70,13 @@ ActiveRecord::Schema.define(version: 20170729125543) do
   end
 
   create_table "rates", force: :cascade do |t|
-    t.string   "from_location"
-    t.string   "to_location"
     t.integer  "courier_id"
     t.float    "price"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "slug"
+    t.integer  "from_area_id"
+    t.integer  "to_area_id"
     t.index ["slug"], name: "index_rates_on_slug", unique: true, using: :btree
   end
 
@@ -110,6 +126,12 @@ ActiveRecord::Schema.define(version: 20170729125543) do
     t.string   "country_code"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "vehicle_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "parcels", "real_users"
