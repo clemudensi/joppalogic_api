@@ -8,6 +8,23 @@ class V1::ParcelsController < ApplicationController
 	end
 
 	def create
+		user = RealUser.find_by_phone_number(params['parcel_from']['phone_number'])
+		if !user
+		 		user = RealUser.new()
+
+		 		r = Random.new
+				r = r.rand(100000...999999)
+			
+		 		user.full_name =	params['parcel_from']['name']
+		 		user.password = 	r.to_s
+		 		user.phone_number = params['parcel_from']['phone_number']
+		 		user.save
+
+		 		#the onboarding message sent to the user
+		 	# 	onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
+				# send_message("+233#{user.phone_number}",onboarding_message)
+		 	end
+
 		@parcel = Parcel.new
 
 			@parcel.vehicle_type			    						= params['vehicle_type']
@@ -21,30 +38,33 @@ class V1::ParcelsController < ApplicationController
 			@parcel.category		             					= params['category']
       		@parcel.sender_name                   		= params['parcel_from']['name']
       		@parcel.sender_phone_number           		= params['parcel_from']['phone_number']
-	        @parcel.sender_email                  		= params['parcel_from']['email']
+	      @parcel.sender_email                  		= params['parcel_from']['email']
+	      @parcel.sender_address                 		= params['parcel_from']['address']
 	      @parcel.receiver_name                 		= params['parcel_to']['name']
 	      @parcel.receiver_phone_number         		= params['parcel_to']['phone_number']
 	      @parcel.receiver_email                		= params['parcel_to']['email']
-	      @parcel.created_by                    		= params['created_by']
+	      @parcel.receiver_address                		= params['parcel_to']['address']
+	      # @parcel.created_by                    		= params['created_by']
 	      rate = Rate.friendly.find(params['rate_id'])
 	      @parcel.rate_id                    				= rate.id
+	      @parcel.real_user_id = user.id
 
 		if @parcel.save
+			message =  "Sender Name: " + params['parcel_from']['name'] + "\n"
+	      message += "Sender Phone: " + params['parcel_from']['phone_number'] + "\n"
+	      message += "Receiver Name: " + params['parcel_to']['name'] + "\n"
+	      message += "Receiver Phone: " + params['parcel_to']['phone_number'] + "\n"
+	      message += "Description: " + params['parcel_description'] + "\n"
+	      message += "Category: " + params['category'] + "\n"
+	      message += "Vehicle Type: " + params['vehicle_type'] + "\n"
+	      message += "Delivery Address: " + params['parcel_to']['address'] + "\n"
+	      message += "Pickup Address: " + params['parcel_from']['address'] + "\n"
 
-			#save the user if this is the first instance of its occurence
-			# @user = User.where(:sender_phone_number params['parcel_from']['phone_number'])
-			 @user = RealUser.find_by_phone_number(params['parcel_from']['phone_number'])
-			 if !@user
-			 		@user = RealUser.new()
-			 		@user.full_name =	params['parcel_from']['name']
-			 		@user.password =	"not_needed"
-			 		@user.phone_number = params['parcel_from']['phone_number']
-			 		@user.save
-			 	end
-
-			@rates = Courier.all
+	      notify_slack(message)
+			@meta = {code: "201", message: "Parcel created."}
 			render :create, status: :created
 		else
+			@meta = {code: "400", message: "An error occured during creation."}
 			head(:unprocessable_entity)
 		end
 
@@ -81,7 +101,7 @@ class V1::ParcelsController < ApplicationController
 			end
 		else
 			@meta = {code: "400", message: "Invalid Address."}
-			message = "Invalid Data: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
+			message = "Invalid params: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
 			notify_slack(message)
 		end
 		
@@ -89,9 +109,9 @@ class V1::ParcelsController < ApplicationController
 	end
 
 	def get_user_parcels
-		user = RealUser.find_by_phone_number(params['phone_number'])
+		user = RealUser.find_by_phone_number(params[:phone_number])
 		if user
-			@parcels = Parcel.find_by_sender_phone_number(params['phone_number'])
+			@parcels = Parcel.where(sender_phone_number: params[:phone_number])
 		else
 		end
 
@@ -116,11 +136,22 @@ class V1::ParcelsController < ApplicationController
 	end
 
  	def notify_slack(message)
- 		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-  		defaults channel: "#production_log",
-           username: "get_rates_endpoint"
-		end
+ 	# 	notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+  # 		defaults channel: "#production_log",
+  #          username: "get_rates_endpoint"
+		# end
+
+		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+	  		defaults channel: "#staging_log",
+	           username: "netlify_hooks"
+	       end
 
 		notifier.ping message
  	end
+
+ 	 def send_message(to, message)
+		SmsghSms.api_client_id = "aoblnanr"
+		SmsghSms.api_client_secret = "dfltzevp"
+		SmsghSms.push(:to => to, :msg => message, :from => "JoppaLogic")
+	end
 end

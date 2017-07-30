@@ -1,18 +1,18 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-# user1 = User.create(
-# 		email: "ayo@gmail.com",
-# 		password: "ayo@gmail.com"
-# 		)
+# # This file should contain all the record creation needed to seed the database with its default values.
+# # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# #
+# # Examples:
+# #
+# #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+# #   Character.create(name: 'Luke', movie: movies.first)
+# # user1 = User.create(
+# # 		email: "ayo@gmail.com",
+# # 		password: "ayo@gmail.com"
+# # 		)
 # Rate.delete_all
 # Courier.delete_all
 # Parcel.delete_all
-# User.delete_all
+# RealUser.delete_all
 
 # courier1 = Courier.create(
 # 			name: "Jerry Express",
@@ -69,8 +69,8 @@
 # 			to_location: "Westlands",
 # 			price: 5.00)
 
-Role.create(name: "joppalogic")
-Role.create(name: "logistics_super_admin")
-Role.create(name: "logistics_admin")
-Role.create(name: "logistics_staff")
-Role.create(name: "logistics_super_admin")
+# # Role.create(name: "joppalogic")
+# # Role.create(name: "logistics_super_admin")
+# # Role.create(name: "logistics_admin")
+# # Role.create(name: "logistics_staff")
+# # Role.create(name: "logistics_super_admin")

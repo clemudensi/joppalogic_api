@@ -122,13 +122,10 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-<<<<<<< HEAD
+    slack-notifier (2.2.2)
     smsgh_sms (1.0.6)
       curb-fu (~> 0)
       nokogiri
-=======
-    slack-notifier (2.2.2)
->>>>>>> dev
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -169,11 +166,8 @@ DEPENDENCIES
   puma (~> 3.0)
   rack-cors
   rails (~> 5.0.4)
-<<<<<<< HEAD
-  smsgh_sms
-=======
   slack-notifier
->>>>>>> dev
+  smsgh_sms
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

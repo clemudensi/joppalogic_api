@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = RealUser.new(user_params)
-
+		
 		if @user.save
 			render :create
 		else
@@ -25,6 +25,8 @@ class UsersController < ApplicationController
 			head(:unprocessable_entity)
 		end
 	end
+
+	def merchant
 
 	def create_user_role
 		@user_role =  UserRole.new
@@ -44,8 +46,7 @@ class UsersController < ApplicationController
 
 	def user_params
 		params.require(:user).permit(
-									:email, 
-									:password, 
+									:email,  
 									:full_name,
 									:phone_number,
 									:country_code)
@@ -60,5 +61,6 @@ class UsersController < ApplicationController
 	def set_user
 		@user = RealUser.find(params[:id])
 	end
+
 end
 end

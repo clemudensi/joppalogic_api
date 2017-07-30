@@ -1,3 +1,4 @@
+json.meta @meta
 json.data do
 	json.parcel do
 		  json.vehicle_type			    @parcel.vehicle_type
@@ -8,7 +9,7 @@ json.data do
     	json.parcel_description	           @parcel.parcel_description
     	json.weight_value		               @parcel.weight_value
     	json.weigh_unit			               @parcel.weigh_unit
-      json.created_by                    @parcel.created_by
+      json.created_by                    @parcel.real_user.full_name
       json.category                      @parcel.category
 
       json.parcel_from do
@@ -25,6 +26,6 @@ json.data do
         json.address              @parcel.receiver_address
       end
 
-      json.user @user.phone_number
+      json.user @parcel.real_user.phone_number
 	end
 end

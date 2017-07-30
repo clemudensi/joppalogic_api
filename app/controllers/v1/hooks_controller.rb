@@ -23,10 +23,18 @@ class V1::HooksController < ApplicationController
 		@user = RealUser.find_by_phone_number(data["human_fields"]["Sender Phone"])
 		 if !@user
 		 		@user = RealUser.new()
+
+		 		r = Random.new
+				r = r.rand(100000...999999)
+			
 		 		@user.full_name =	data["human_fields"]["Sender Name"]
-		 		@user.password =	"not_needed"
+		 		@user.password = 	r.to_s
 		 		@user.phone_number = data["human_fields"]["Sender Phone"]
 		 		@user.save
+
+		 		#the onboarding message sent to the user
+		 		onboarding_message = "Welcome to JoppaLogic.\n Your passcode is #{r}."
+				send_message("+233#{@user.phone_number}",onboarding_message)
 		 	end
 
 		@parcel = Parcel.new
@@ -76,5 +84,12 @@ class V1::HooksController < ApplicationController
 
 		notifier.ping message
  	end
+
+
+ 	def send_message(to, message)
+		SmsghSms.api_client_id = "aoblnanr"
+		SmsghSms.api_client_secret = "dfltzevp"
+		SmsghSms.push(:to => to, :msg => message, :from => "JoppaLogic")
+	end
 end
 
