@@ -26,8 +26,6 @@ class UsersController < ApplicationController
 		end
 	end
 
-	def merchant
-
 	def create_user_role
 		@user_role =  UserRole.new
 		@user_role.user_id = params["user_id"]
