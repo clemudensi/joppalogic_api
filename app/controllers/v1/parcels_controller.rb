@@ -21,8 +21,8 @@ class V1::ParcelsController < ApplicationController
 		 		user.save
 
 		 		#the onboarding message sent to the user
-		 	# 	onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
-				# send_message("+233#{user.phone_number}",onboarding_message)
+		 		onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
+				send_message("+233#{user.phone_number}",onboarding_message)
 		 	end
 
 		@parcel = Parcel.new
@@ -61,6 +61,7 @@ class V1::ParcelsController < ApplicationController
 	      message += "Pickup Address: " + params['parcel_from']['address'] + "\n"
 
 	      notify_slack(message)
+	      
 			@meta = {code: "201", message: "Parcel created."}
 			render :create, status: :created
 		else

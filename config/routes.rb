@@ -23,13 +23,12 @@ Rails.application.routes.draw do
 		resources :roles
 	end
 
-	namespace :v1 do
-
-		resources :hooks, only: [] do
-			collection do
-				post :get_parcel
-			end
-		end
-	end
+	# namespace :v1 do
+	# 	resources :hooks, only: [] do
+	# 		collection do
+	# 			post :get_parcel
+	# 		end
+	# 	end
+	# end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
