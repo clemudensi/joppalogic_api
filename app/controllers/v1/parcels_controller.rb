@@ -91,7 +91,10 @@ class V1::ParcelsController < ApplicationController
  		from_area      		= params['parcel_from']['area']
     	to_area  			= params['parcel_to']['area']
 
-	    if(from_area.length > 1 && to_area.length > 1)
+	    if from_area.nil? || to_area.nil?
+	    	@meta = {code: "400", message: "Keys for rate calculation missing."}
+	    else
+	    	if(from_area.length > 1 && to_area.length > 1)
 				from = Area.find_by_slug(from_area)
 				to = Area.find_by_slug(to_area)
 
@@ -108,6 +111,7 @@ class V1::ParcelsController < ApplicationController
 			message = "Invalid params: Parcel from: Parcel from: #{from_area}, #{to_area}"
 			notify_slack(message)
 		end
+	    end
 		
 		render :rate
 	end
@@ -117,6 +121,7 @@ class V1::ParcelsController < ApplicationController
 		if user
 			@parcels = Parcel.where(sender_phone_number: params[:phone_number])
 		else
+			@meta = {code: "400", message: "User not found."}
 		end
 
 		render :user_parcels
