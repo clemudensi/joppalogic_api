@@ -8,6 +8,7 @@ class V1::ParcelsController < ApplicationController
 	end
 
 	def create
+
 		user = RealUser.find_by_phone_number(params['parcel_from']['phone_number'])
 		if !user
 		 		user = RealUser.new()
@@ -19,10 +20,6 @@ class V1::ParcelsController < ApplicationController
 		 		user.password = 	r.to_s
 		 		user.phone_number = params['parcel_from']['phone_number']
 		 		user.save
-
-		 		#the onboarding message sent to the user
-		 		onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
-				send_message("+233#{user.phone_number}",onboarding_message)
 		 	end
 
 		@parcel = Parcel.new
@@ -44,30 +41,38 @@ class V1::ParcelsController < ApplicationController
 	      @parcel.receiver_phone_number         		= params['parcel_to']['phone_number']
 	      @parcel.receiver_email                		= params['parcel_to']['email']
 	      @parcel.receiver_address                		= params['parcel_to']['address']
-	      # @parcel.created_by                    		= params['created_by']
-	      rate = Rate.friendly.find(params['rate_id'])
-	      @parcel.rate_id                    				= rate.id
 	      @parcel.real_user_id = user.id
+	      rate = Rate.friendly.find_by_slug(params['rate_id'])
 
-		if @parcel.save
-			message =  "Sender Name: " + params['parcel_from']['name'] + "\n"
-	      message += "Sender Phone: " + params['parcel_from']['phone_number'] + "\n"
-	      message += "Receiver Name: " + params['parcel_to']['name'] + "\n"
-	      message += "Receiver Phone: " + params['parcel_to']['phone_number'] + "\n"
-	      message += "Description: " + params['parcel_description'] + "\n"
-	      message += "Category: " + params['category'] + "\n"
-	      message += "Vehicle Type: " + params['vehicle_type'] + "\n"
-	      message += "Delivery Address: " + params['parcel_to']['address'] + "\n"
-	      message += "Pickup Address: " + params['parcel_from']['address'] + "\n"
+	      if rate.nil?
+	      	@meta = {code: "200", message: "Wrong rate inputted. Parcel not saved. Please check your rates"}
+	      else
+			
+	      	@parcel.rate_id                    			= rate.id
 
-	      notify_slack(message)
+				if @parcel.save
+					message =  "Sender Name: " + params['parcel_from']['name'] + "\n"
+			      message += "Sender Phone: " + params['parcel_from']['phone_number'] + "\n"
+			      message += "Receiver Name: " + params['parcel_to']['name'] + "\n"
+			      message += "Receiver Phone: " + params['parcel_to']['phone_number'] + "\n"
+			      message += "Description: " + params['parcel_description'] + "\n"
+			      message += "Category: " + params['category'] + "\n"
+			      message += "Vehicle Type: " + params['vehicle_type'] + "\n"
+			      message += "Delivery Address: " + params['parcel_to']['address'] + "\n"
+			      message += "Pickup Address: " + params['parcel_from']['address'] + "\n"
+			      #the onboarding message sent to the user
+		 		onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
+				send_message("+233#{user.phone_number}",onboarding_message)
+			      notify_slack(message)
+			      
+					@meta = {code: "201", message: "Parcel created."}
+					render :create, status: :created
+				else
+					@meta = {code: "400", message: "An error occured during creation."}
+					head(:unprocessable_entity)
+				end
+	      end
 	      
-			@meta = {code: "201", message: "Parcel created."}
-			render :create, status: :created
-		else
-			@meta = {code: "400", message: "An error occured during creation."}
-			head(:unprocessable_entity)
-		end
 
 	end
 
@@ -95,12 +100,12 @@ class V1::ParcelsController < ApplicationController
 				@meta = {code: "200", message: "Address successfully retrieved."}
 			else
 				@meta = {code: "204", message: "Realtime rates not available for this route."}
-				message = "Unavailable rates: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
+				message = "Unavailable rates: Parcel from: #{from}, #{to}"
 				notify_slack(message)
 			end
 		else
 			@meta = {code: "400", message: "Invalid Address."}
-			message = "Invalid params: Parcel from: #{from} with lat: #{from_lat} , #{from_lng}/nParcel to: #{to} with lat: #{to_lat}, lng: #{to_lng}"
+			message = "Invalid params: Parcel from: Parcel from: #{from}, #{to}"
 			notify_slack(message)
 		end
 		

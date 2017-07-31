@@ -1,5 +1,6 @@
 json.meta @meta
 json.data do
+  if @parcel
 	json.parcel do
 		  json.vehicle_type			    @parcel.vehicle_type
     	json.dimension_width	  @parcel.dimension_width
@@ -28,4 +29,5 @@ json.data do
 
       json.user @parcel.real_user.phone_number
 	end
+end
 end
