@@ -91,21 +91,21 @@ class V1::ParcelsController < ApplicationController
  		from_area      		= params['parcel_from']['area']
     	to_area  			= params['parcel_to']['area']
 
-    if(from_area.length > 1 && to_area.length > 1)
-			from = Area.find_by_slug(from_area)
-			to = Area.find_by_slug(to_area)
+	    if(from_area.length > 1 && to_area.length > 1)
+				from = Area.find_by_slug(from_area)
+				to = Area.find_by_slug(to_area)
 
-			@rate = get_prices(from,to,vehicle_type)
-			if @rate.size > 0
-				@meta = {code: "200", message: "Address successfully retrieved."}
-			else
-				@meta = {code: "204", message: "Realtime rates not available for this route."}
-				message = "Unavailable rates: Parcel from: #{from}, #{to}"
-				notify_slack(message)
-			end
+				@rate = get_prices(from,to,vehicle_type)
+				if @rate.size > 0
+					@meta = {code: "200", message: "Address successfully retrieved."}
+				else
+					@meta = {code: "204", message: "Realtime rates not available for this route."}
+					message = "Unavailable rates: Parcel from: #{from_area}, #{to_area}"
+					notify_slack(message)
+				end
 		else
 			@meta = {code: "400", message: "Invalid Address."}
-			message = "Invalid params: Parcel from: Parcel from: #{from}, #{to}"
+			message = "Invalid params: Parcel from: Parcel from: #{from_area}, #{to_area}"
 			notify_slack(message)
 		end
 		
