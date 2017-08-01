@@ -1,5 +1,5 @@
 class V1::CouriersController < ApplicationController
-	# skip_before_action :current_user
+	skip_before_action :current_user
 	before_action :set_courier, only: [:show, :update]
 	def index
 		@couriers = Courier.all
