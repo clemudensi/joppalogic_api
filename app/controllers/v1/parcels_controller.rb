@@ -20,6 +20,10 @@ class V1::ParcelsController < ApplicationController
 		 		user.password = 	r.to_s
 		 		user.phone_number = params['parcel_from']['phone_number']
 		 		user.save
+
+		 		 #the onboarding message sent to the user
+		 		onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
+				send_message("+233#{user.phone_number}",onboarding_message)
 		 	end
 
 		@parcel = Parcel.new
@@ -60,9 +64,7 @@ class V1::ParcelsController < ApplicationController
 			      message += "Vehicle Type: " + params['vehicle_type'] + "\n"
 			      message += "Delivery Address: " + params['parcel_to']['address'] + "\n"
 			      message += "Pickup Address: " + params['parcel_from']['address'] + "\n"
-			      #the onboarding message sent to the user
-		 		onboarding_message = "Welcome to JoppaLogic.\nYour passcode is #{r}."
-				send_message("+233#{user.phone_number}",onboarding_message)
+			     
 			      notify_slack(message)
 			      
 					@meta = {code: "201", message: "Parcel created."}
