@@ -7,6 +7,7 @@ json.data do
 	json.to			r.to_area.name
 	json.price 		r.price
 	json.courier 	r.courier.name
+	json.image		r.courier.image_url
 	json.rate_id	r.slug
 	end
 end
