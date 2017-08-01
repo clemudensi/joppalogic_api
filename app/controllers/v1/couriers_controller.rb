@@ -1,6 +1,6 @@
 class V1::CouriersController < ApplicationController
 	# skip_before_action :current_user
-	before_action :set_courier, only: [:show]
+	before_action :set_courier, only: [:show, :update]
 	def index
 		@couriers = Courier.all
 		render :index, status: :ok
@@ -15,10 +15,18 @@ class V1::CouriersController < ApplicationController
 		render :show
 	end
 
+	def update
+		if @courier.update(courier_params)
+			render :update
+		else
+			head(:unprocessable_entity)
+		end
+	end
+
 	private
 
 	def courier_params
-		params.require(:courier).permit(:slug, :name, :phone, :web_url, :description)
+		params.require(:courier).permit(:slug, :name, :phone, :web_url, :description, :image_url)
 	end
 
 	def set_courier

@@ -1,3 +1,3 @@
 json.courier @couriers do |c|
-	json.(c, :slug, :name, :phone,:web_url, :description,:capabilities, :active, :parameters)
+	json.(c, :id, :slug, :name, :phone,:web_url, :image_url, :description,:capabilities, :active, :parameters)
 end

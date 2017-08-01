@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 				post :resend_token, :verify_merchant
 			end
 		end
-		resources :couriers, only: [:index,:show]
+		resources :couriers
 		resources :users, only: [:index,:create,:update] do
 			collection do
 				post :create_user_role
