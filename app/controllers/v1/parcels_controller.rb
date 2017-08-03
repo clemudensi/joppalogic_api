@@ -145,15 +145,15 @@ class V1::ParcelsController < ApplicationController
 	end
 
  	def notify_slack(message)
- 	# 	notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-  # 		defaults channel: "#production_log",
-  #          username: "get_rates_endpoint"
-		# end
+ 		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+  		defaults channel: "#production_log",
+           username: "get_rates_endpoint"
+		end
 
-		notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-	  		defaults channel: "#staging_log",
-	           username: "netlify_hooks"
-	       end
+		# notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+	 #  		defaults channel: "#staging_log",
+	 #           username: "netlify_hooks"
+	 #       end
 
 		notifier.ping message
  	end
