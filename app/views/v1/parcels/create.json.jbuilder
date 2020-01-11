@@ -2,11 +2,11 @@ json.meta @meta
 json.data do
   if @parcel
 	json.parcel do
-		  json.vehicle_type			    @parcel.vehicle_type
-    	json.dimension_width	  @parcel.dimension_width
-    	json.dimension_height	  @parcel.dimension_height
-    	json.dimension_depth	  @parcel.dimension_depth
-    	json.dimension_unit		  @parcel.dimension_unit
+		  json.vehicle_type			             @parcel.vehicle_type
+    	json.dimension_width	             @parcel.dimension_width
+    	json.dimension_height	             @parcel.dimension_height
+    	json.dimension_depth	             @parcel.dimension_depth
+    	json.dimension_unit		             @parcel.dimension_unit
     	json.parcel_description	           @parcel.parcel_description
     	json.weight_value		               @parcel.weight_value
     	json.weigh_unit			               @parcel.weigh_unit
